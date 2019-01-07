@@ -7,15 +7,22 @@ db.on('error',console.error.bind(console,'connection error'));
 db.once('open',() => { 
     console.log('DataBase has been connected!'); 
 });
+
+
 const UserSchema = new Schema({
     username:String,
     password:Number
 })
+
+
+
 const User = mongoose.model('User',UserSchema)
 let user = new User({
     username:'sydeny',
     password:1233123131
 })
+
+
 // //保存
 user.save((err,res)=>{
     if(err){
@@ -25,6 +32,9 @@ user.save((err,res)=>{
     }
     console.log(res)
 })
+
+
+
 // User.find({'username':'Tony'},(err,doc)=>{
 //     console.log(doc);
 // })
