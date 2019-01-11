@@ -1,18 +1,21 @@
 const app = require("express");
 const router = app.Router();
 const User = require('../../model/user');
+const jwt = require('jsonwebtoken');
 router.post('/',(req,res)=>{
     // User.find({})
-    console.log(req.body);
+    // console.log(req.body);
     User.find({'username':req.body.username},(err,data)=>{
         if(data.length){
             if(data[0].password === req.body.password){
-                res.send("登录成功");
+                const token = jwt.sign({'username':data[0].username},'wtjckfuck',{'expiresIn':10});
+                console.log(token);
+                res.send("login successful");
             }else{
-                res.send("密码错误");
+                res.send("password error");
             }
         }else{
-            res.send("无此用户");
+            res.send("no user");
         }
     })
 })
