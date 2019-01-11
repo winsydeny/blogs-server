@@ -7,3 +7,4 @@ db.once('open',() => {
     console.log('DataBase has been connected!'); 
 });
 module.exports = db;
+    

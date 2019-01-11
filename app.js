@@ -1,5 +1,6 @@
 const express = require('express')
 const fs = require('fs')
+const bodyParser = require('body-parser');
 const url = require('url')
 let app = express();
 
@@ -18,6 +19,7 @@ const UserSchema = require('./model/article');
 // });
 
 
+
 // create Schema
 // const UserSchema = new Schema({
 //     title:String,
@@ -26,11 +28,13 @@ const UserSchema = require('./model/article');
 //     author:String
 // });
 
+
 const total_list = require('./route/api/total_list');
 const login = require("./route/api/login");
 const comment = require('./route/api/comment');
 const detail = require('./route/api/detail');
 const add = require('./route/api/add');
+const register = require('./route/api/register');
 // const UserSchema1 = new Schema({
 //     username:String,
 //     password:Number
@@ -38,6 +42,7 @@ const add = require('./route/api/add');
 // const User = mongoose.model('User',UserSchema1)
 
 // const Artical = mongoose.model('Artical',UserSchema);
+
 const Artical = require('./model/article');
 
 
@@ -47,6 +52,7 @@ const Artical = require('./model/article');
 // }
 
 // cross domain
+
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
@@ -55,12 +61,18 @@ app.all('*', function(req, res, next) {
     if(req.method=="OPTIONS") res.send(200);/*让options请求快速返回*/
     else  next();
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 // router
 app.use('/api/total_list',total_list);
 app.use('/api/login',login);
+
 app.use('/api/comment',comment);
 app.use('/api/detail',detail);
 app.use('/api/add',add);
+app.use('/api/register',register);
+
 
 app.listen(3000,()=>{
     console.log('is running');
